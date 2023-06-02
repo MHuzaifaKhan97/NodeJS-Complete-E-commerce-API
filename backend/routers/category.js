@@ -3,7 +3,7 @@ const router = express.Router();
 // Models
 const {Category} = require('../models/category');
 
-// get method 
+// Get categories list
 router.get("/", async (req, res) => {
 
     const categoryList = await Category.find();
@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
     res.status(200).send(categoryList);
  })
 
+//  Get category by Id
  router.get("/:id", async (req, res) => {
 
     const category = await Category.findById(req.params.id);
@@ -29,6 +30,7 @@ router.get("/", async (req, res) => {
     res.status(200).send(category);
  })
 
+//  Add Category
  router.post("/", async (req,res) => {
     let category = new Category({
         name: req.body.name,
@@ -44,7 +46,7 @@ router.get("/", async (req, res) => {
     res.send(category);
  })
 
- // api/v1/id
+//  Delete Category
  router.delete("/:id", async (req,res) => {
    let category = await Category.findByIdAndRemove(req.params.id)
    if(category){
@@ -59,4 +61,21 @@ router.get("/", async (req, res) => {
     })
    }
  })
+
+//  Update Category
+router.put("/:id", async (req,res) => {
+    const category  = await Category.findByIdAndUpdate(req.params.id,{
+        name: req.body.name,
+        icon: req.body.icon,
+        color: req.body.color,
+    }, {new: true})
+    if(!category){
+        return res.status(400).send({
+             message:"Category can not be updated"
+         })
+     }
+     res.send(category); 
+})
+
+
  module.exports = router; 

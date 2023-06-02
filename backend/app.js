@@ -31,7 +31,7 @@ const categoryRouter = require('./routers/category');
 app.use(`${api}/products`, productRouter)
 app.use(`${api}/user`, userRouter)
 app.use(`${api}/order`, orderRouter)
-app.use(`${api}/category`, categoryRouter)
+app.use(`${api}/categories`, categoryRouter)
 
 // Connection with MongoDB
 mongoose.connect(connectionString, {

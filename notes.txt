@@ -1,0 +1,64 @@
+NodeJS Complete E-commerce Web API:
+
+RESTFUL API SERVICES:
+
+Architecture:
+- Client
+- Server
+- Protocol
+- Client & Server are connect through HTTP Protocol,
+
+CRUD Operation:
+- Create.
+- Read.
+- Update.
+- Delete.
+
+HTTP Methods:
+- Get.
+- Post.
+- Put.
+- Delete
+
+TOOLS & ENVIRONMENT:
+
+- download & install VS Code.
+- download & install NodeJS.
+- download & install Postman.
+- Create an Account on MongoDB Atlas.
+
+MongoDB Atlas Configurations:
+- create new project (e-commerce-backend)
+- add project owner
+- create new cluster with username & password (free)
+
+PREPARING THE API SERVER:
+
+What is backend?
+
+- Any web & mobile app consider as frontend.
+- Backend is used to hold data somewhere on server.
+
+Create a new project:
+- mkdir backend
+- cd backend
+- npm init.
+
+Install Nodemon package (for continuous monitoring our code changes)
+- nom install nodemon
+  "scripts": {
+    "start":"nodemon app.js",
+  },
+
+Install Express: (Used to create server)
+- nom install express
+
+
+
+
+
+
+
+
+
+

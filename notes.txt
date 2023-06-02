@@ -61,8 +61,12 @@ Install Express: (Used to create server)
 
 Middleware 
 - app.use(express.json()) => to tell post requst that req.body is json
+- app.use(bodyParser.json()) => updated than express.json() => to tell post requst that req.body is json
+
 - dotenv => for securely saved files.
 
+Logging API Requests
+- npm i morgan => it is also a middleware
 
 
 

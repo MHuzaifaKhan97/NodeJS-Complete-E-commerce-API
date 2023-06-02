@@ -73,7 +73,8 @@ MongoDB
 - In mongodb we created schemas and model from schemas
 
 
-
+CORS (Cross Origin Resource Sharing)
+- This error occurs because nodejs application can not trust any other application
 
 
 

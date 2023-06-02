@@ -1,13 +1,19 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 // For JSON Body Parse
 const bodyParser = require('body-parser');
 // For API Request Logging
-const morgan = require('morgan')
+const morgan = require('morgan');
 // For MongoDB
 const mongoose = require('mongoose');
 // Use dot env
 require('dotenv/config')
+
+// Allowing all request for all other origin. 
+app.use(cors());
+app.options("*", cors());
+
 // Used a middleware to parse req.body in post request
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
@@ -17,9 +23,15 @@ const connectionString = process.env.CONNECTION_STRING;
 
 // Import routers
 const productRouter = require('./routers/products');
+const userRouter = require('./routers/user');
+const orderRouter = require('./routers/order');
+const categoryRouter = require('./routers/category');
 
 // Routes 
 app.use(`${api}/products`, productRouter)
+app.use(`${api}/user`, userRouter)
+app.use(`${api}/order`, orderRouter)
+app.use(`${api}/category`, categoryRouter)
 
 // Connection with MongoDB
 mongoose.connect(connectionString, {

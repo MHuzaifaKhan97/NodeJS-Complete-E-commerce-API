@@ -27,6 +27,10 @@ TOOLS & ENVIRONMENT:
 - download & install Postman.
 - Create an Account on MongoDB Atlas.
 
+
+VS Code Extension
+- Prettier - Code formatter (Command + Shift + P) to create formatter file and format document
+- 
 MongoDB Atlas Configurations:
 - create new project (e-commerce-backend)
 - add project owner

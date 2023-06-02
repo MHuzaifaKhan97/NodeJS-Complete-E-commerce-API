@@ -6,53 +6,20 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan')
 // For MongoDB
 const mongoose = require('mongoose');
-// use dot env
+// Use dot env
 require('dotenv/config')
-// used a middleware to parse req.body in post request
+// Used a middleware to parse req.body in post request
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 // Constants from .env file
 const api = process.env.API_URL;
 const connectionString = process.env.CONNECTION_STRING;
 
-const productSchema = mongoose.Schema({
-    name:String,
-    image: String,
-    countInStock: {
-        type: Number,
-        required: true
-    }
-})
+// Import routers
+const productRouter = require('./routers/products');
 
-const Product = mongoose.model('Product', productSchema);
-//api/v1
-// get method 
-app.get(`${api}/products`, async (req, res) => {
-
-   const productList = await Product.find();
-    
-   if(!productList){
-    res.status(500).json({
-        success: false,
-    });
-   }
-   res.send(productList);
-})
-// post method
-app.post(`${api}/products`, (req, res) => {
-    const product = new Product({
-        name:req.body.name,
-        image:req.body.image,
-        countInStock:req.body.countInStock,
-    })
-    product.save().then((createdProduct) => {
-        res.status(201).send(createdProduct);
-    }).catch(err => res.status(500).json({
-        error:err,
-        success: false,
-    }));
-
-})
+// Routes 
+app.use(`${api}/products`, productRouter)
 
 // Connection with MongoDB
 mongoose.connect(connectionString, {

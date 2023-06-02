@@ -59,7 +59,9 @@ Install Nodemon package (for continuous monitoring our code changes)
 Install Express: (Used to create server)
 - nom install express
 
-
+Middleware 
+- app.use(express.json()) => to tell post requst that req.body is json
+- dotenv => for securely saved files.
 
 
 

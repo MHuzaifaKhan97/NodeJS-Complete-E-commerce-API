@@ -68,6 +68,9 @@ Middleware
 Logging API Requests
 - npm i morgan => it is also a middleware
 
+MongoDB
+- npm i mongoose
+- In mongodb we created schemas and model from schemas
 
 
 

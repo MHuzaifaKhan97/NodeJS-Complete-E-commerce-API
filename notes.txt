@@ -26,6 +26,8 @@ TOOLS & ENVIRONMENT:
 - download & install NodeJS.
 - download & install Postman.
 - Create an Account on MongoDB Atlas.
+- download and install mongodb compass
+
 
 
 VS Code Extension

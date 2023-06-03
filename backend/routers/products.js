@@ -139,5 +139,38 @@ router.delete("/:id", async (req, res) => {
     });
 
  })
- 
+ // Get product count
+router.get('/get/count', async (req,res) => {
+    const productCount = await Product.countDocuments();
+    if(!productCount){
+        res.status(400).send({success:false, message:"No Product found"})
+    }
+    res.status(200).send({success:true, productCount:productCount})
+
+})
+ // Get product count
+ router.get('/get/featured/:count', async (req,res) => {
+    const count = req.params.count ? req.params.count : 0;
+    const productList = await Product.find({isFeatured: true}).limit(+count);
+    if(!productList){
+        res.status(400).send({success:false, message:"No Product found"})
+    }
+    res.status(200).send({success:true, productList:productList})
+
+})
+
+// Get product by category
+router.get('/get/filter', async (req,res) => {
+    let filter = {};
+    if(req.query.categories){
+        filter = {category: req.query.categories.split(',')}
+    }
+    const productList = await Product.find(filter).populate('category');
+    if(!productList){
+        res.status(400).send({success:false, message:"No Product found"})
+    }
+    res.status(200).send({success:true, productList:productList})
+
+})
+
  module.exports = router;

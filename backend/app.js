@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const authJwt = require('./helpers/jwt');
+const errorHandler = require('./helpers/error-handler');
 // For JSON Body Parse
 const bodyParser = require('body-parser');
 // For API Request Logging
@@ -17,6 +19,10 @@ app.options("*", cors());
 // Used a middleware to parse req.body in post request
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
+app.use(authJwt());
+// Error handler
+app.use(errorHandler)
+
 // Constants from .env file
 const api = process.env.API_URL;
 const connectionString = process.env.CONNECTION_STRING;

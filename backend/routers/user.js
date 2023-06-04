@@ -94,8 +94,32 @@ router.get("/basicDetails", async (req, res) => {
    }else{
     res.status(200).send("Username or password is incorrect")
    }
-
-  
  })
+
+  // Get user count
+router.get('/get/count', async (req,res) => {
+    const userCount = await User.countDocuments();
+    if(!userCount){
+        res.status(400).send({success:false, message:"No User found"})
+    }
+    res.status(200).send({success:true, userCount:userCount})
+
+})
+ 
+//  Delete user
+router.delete("/:id", async (req,res) => {
+    let user = await User.findByIdAndRemove(req.params.id)
+    if(user){
+     res.status(200).send({
+         success: true,
+         message:"User has been deleted successfully"
+     })
+    }else{
+     res.status(404).send({
+         success:false,
+         message:"User not found"
+     })
+    }
+  })
  
  module.exports = router;

@@ -81,6 +81,7 @@ router.get("/basicDetails", async (req, res) => {
    if(user && bcrypt.compareSync(req.body.password, user.passwordHash)){
     const token = jwt.sign({
         userId:user.id,
+        isAdmin:user.isAdmin,
     },
     secret,
     // 1d = 1 day, 1w = 1 week

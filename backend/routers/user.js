@@ -4,6 +4,8 @@ const router = express.Router();
 const {User} = require('../models/user');
 // Import BcryptJS
 const bcrypt = require('bcryptjs');
+// Import JWT
+const jwt = require('jsonwebtoken');
 
 // Get all users
 router.get("/", async (req, res) => {
@@ -43,7 +45,7 @@ router.get("/basicDetails", async (req, res) => {
  })
 
  // Register User
- router. post("/", async (req,res) => {
+ router. post("/register", async (req,res) => {
     let user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -63,6 +65,36 @@ router.get("/basicDetails", async (req, res) => {
         })
     }
     res.send(user);
+ })
+ // Login User
+ router. post("/login", async (req,res) => {
+   const user = await User.findOne({
+    email:req.body.email
+   });
+   const secret = process.env.SECRET;
+   if(!user){
+    res.status(400).send({
+        success:false,
+        message:"User not found"
+    })
+   }
+   if(user && bcrypt.compareSync(req.body.password, user.passwordHash)){
+    const token = jwt.sign({
+        userId:user.id,
+    },
+    secret,
+    // 1d = 1 day, 1w = 1 week
+    {expiresIn: '1d'}
+    );
+    res.status(200).send({
+        email:user.email,
+        token:token,
+    })
+   }else{
+    res.status(200).send("Username or password is incorrect")
+   }
+
+  
  })
  
  module.exports = router;

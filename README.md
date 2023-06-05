@@ -1,6 +1,6 @@
 # NodeJS Complete Ecommerce Backend:
 
-## - Product 
+## - Products
 ## - Categories
 ## - Users 
   

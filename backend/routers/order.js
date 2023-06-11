@@ -50,7 +50,6 @@ router.get("/:id", async (req, res) => {
         return totalPrice;
     }));
 
-    console.log(totalPrices);
     // to sum of all prices
     const totalPrice = totalPrices.reduce((a,b) => a+b,0);
 
@@ -130,4 +129,15 @@ router.get('/get/count', async (req,res) => {
     res.status(200).send({success:true, orderCount:orderCount})
 
 })
+// Get list of order for specific user
+router.get("/get/userorders/:userid", async (req, res) => {                                  
+    const userOrderList = await Order.find({user: req.params.userid}).populate('user', 'name')
+    .populate({path:'orderItems', populate: {path: 'product', populate: 'category'}}).sort({'dateOrdered':-1});
+    if(!userOrderList){
+     res.status(500).json({
+         success: false,
+     });
+    }
+    res.send(userOrderList);
+ })
  module.exports = router;

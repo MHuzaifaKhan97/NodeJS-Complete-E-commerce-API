@@ -5,15 +5,28 @@ const {Order} = require('../models/order');
 const {OrderItem} = require('../models/orderItem');
 
 //api/v1
-// get method 
-router.get("/", async (req, res) => {
-    const orderList = await Order.find();
+// get orders
+router.get("/", async (req, res) => {                                   // -1 means newest first
+    const orderList = await Order.find().populate('user', 'name').sort({'dateOrdered':-1});
     if(!orderList){
      res.status(500).json({
          success: false,
      });
     }
     res.send(orderList);
+ })
+
+ // get orders
+router.get("/:id", async (req, res) => {                                 
+    const order = await Order.findById(req.params.id)
+    .populate('user', 'name')
+    .populate({path:'orderItems', populate: {path: 'product', populate: 'category'}});
+    if(!order){
+     res.status(500).json({
+         success: false,
+     });
+    }
+    res.send(order);
  })
 
 //  Add order

@@ -19,7 +19,7 @@ function authJwt(){
 
 async function isRevoked(req, res){
     // if not admin
-    if(!res.payload.isAdmin){
+    if(res.payload.isAdmin){
        return true;
     }
        return false

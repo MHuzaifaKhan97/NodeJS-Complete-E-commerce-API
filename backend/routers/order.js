@@ -5,7 +5,7 @@ const {Order} = require('../models/order');
 const {OrderItem} = require('../models/orderItem');
 
 //api/v1
-// get orders
+// Get orders
 router.get("/", async (req, res) => {                                   // -1 means newest first
     const orderList = await Order.find().populate('user', 'name').sort({'dateOrdered':-1});
     if(!orderList){
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {                                   // -1 me
     res.send(orderList);
  })
 
- // get orders
+ // Get orders by id
 router.get("/:id", async (req, res) => {                                 
     const order = await Order.findById(req.params.id)
     .populate('user', 'name')
@@ -64,5 +64,37 @@ router.get("/:id", async (req, res) => {
     }
     res.send(order);
  })
+ // Update order
+ router.put("/:id", async (req,res) => {
+    const order  = await Order.findByIdAndUpdate(req.params.id,{
+       status: req.body.status,
+    }, 
+    {new: true})
+    if(!order){
+        return res.status(400).send({
+             message:"Order can not be updated"
+         })
+     }
+     res.send(order); 
+})
+
+//  Delete order
+router.delete("/:id", async (req,res) => {
+    let order = await Order.findByIdAndRemove(req.params.id)
+    if(order){
+        order.orderItems.map(async (orderItems)=> {
+            await OrderItem.findByIdAndRemove(orderItems)
+        });
+     res.status(200).send({
+         success: true,
+         message:"Order has been deleted successfully"
+     })
+    }else{
+     res.status(404).send({
+         success:false,
+         message:"Order not found"
+     })
+    }
+  })
  
  module.exports = router;

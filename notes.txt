@@ -76,5 +76,8 @@ MongoDB
 CORS (Cross Origin Resource Sharing)
 - This error occurs because nodejs application can not trust any other application
 
+Image Upload:
+- multer user to upload image on server.
+- npm install multer
 
 
